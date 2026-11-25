@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#FF4D8D" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Friendship Ads Earnings" />
+  <title>Friendship Ads Earnings - Visit & Earn Money</title>
+  <link id="pwa-manifest-link" rel="manifest" href="" />
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #FF4D8D;
+      --blue: #2196F3;
+      --gold: #FFB300;
+      --bg: #FFC0D9;
+      --card: #FFFFFF;
+      --text: #1A1F36;
+      --subtext: #5A6275;
+      --border: rgba(255, 77, 141, 0.25);
+      --shadow: 0 10px 24px rgba(255, 77, 141, 0.22), 0 4px 10px rgba(33, 150, 243, 0.14);
+    }
+    body.dark {
+      --bg: #121212;
+      --card: #1E1E1E;
+      --text: #F5F7FA;
+      --subtext: #A0A8B8;
+      --border: rgba(255, 77, 141, 0.35);
+      --shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; justify-content: center; }
+    #splash-screen {
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(135deg, #FF4D8D 0%, #9C27B0 50%, #2196F3 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; color: #FFF; padding: 20px; cursor: pointer;
+      animation: splashOut 0.3s ease 0.8s forwards;
+    }
+    #splash-screen.hidden { display: none !important; opacity: 0 !important; pointer-events: none !important; }
+    @keyframes splashOut { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+    @keyframes bounce3D { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-10px) scale(1.03); } }
+    .bounce-anim { animation: bounce3D 2.2s infinite ease-in-out; }
+    .logo-line-1 { font-size: 24px; font-weight: 900; color: #FF4D8D; text-shadow: -2px -2px 0 #FFF, 2px -2px 0 #FFF, -2px 2px 0 #FFF, 2px 2px 0 #FFF, 0 4px 8px rgba(0,0,0,0.3); }
+    .logo-line-2 { font-size: 22px; font-weight: 900; color: #2196F3; text-shadow: -2px -2px 0 #FFF, 2px -2px 0 #FFF, -2px 2px 0 #FFF, 2px 2px 0 #FFF, 0 4px 8px rgba(0,0,0,0.3); }
+    .logo-tagline { font-size: 12px; font-weight: 700; margin-top: 4px; letter-spacing: 1.5px; color: #FFB300; }
+    .app-shell { width: 100%; max-width: 460px; min-height: 100vh; background: var(--bg); position: relative; padding-bottom: 88px; }
+    .top-bar {
+      position: sticky; top: 0; z-index: 50; background: var(--card); padding: 10px 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); border-bottom: 2px solid var(--border);
+    }
+    .brand-left { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .brand-name-top { font-size: 13px; font-weight: 900; background: linear-gradient(90deg, var(--pink), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; }
+    .brand-name-sub { font-size: 9px; font-weight: 700; color: var(--subtext); display: block; }
+    .pill-btn { border: none; border-radius: 12px; padding: 6px 9px; font-size: 11px; font-weight: 800; cursor: pointer; background: linear-gradient(135deg, var(--pink), var(--blue)); color: #FFF; }
+    .page { display: none; padding: 14px; }
+    .page.active { display: block; }
+    .card { background: var(--card); border-radius: 20px; padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+    .btn-3d {
+      width: 100%; border: none; border-radius: 14px; padding: 13px 16px; font-size: 14px; font-weight: 800;
+      color: #FFF; background: linear-gradient(135deg, var(--pink), var(--blue));
+      box-shadow: 0 6px 15px rgba(255, 77, 141, 0.35); cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-gold { background: linear-gradient(135deg, #FFB300, #FF6F00); }
+    .btn-blue { background: linear-gradient(135deg, #2196F3, #0D47A1); }
+    .btn-pink { background: linear-gradient(135deg, #FF4D8D, #C2185B); }
+    .btn-yt   { background: linear-gradient(135deg, #FF0000, #B71C1C); }
+    .btn-dark { background: linear-gradient(135deg, #455A64, #263238); }
+    .btn-sm   { padding: 9px 12px; font-size: 12px; width: auto; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+    .input-box { width: 100%; padding: 12px 14px; border-radius: 14px; border: 2px solid var(--border); background: var(--bg); color: var(--text); font-size: 13px; font-weight: 600; outline: none; }
+    .social-btn { width: 100%; border: none; border-radius: 14px; padding: 14px; font-size: 15px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+    .btn-google { background: #FFF; color: #1F1F1F; border: 2px solid #E0E0E0; }
+    .btn-facebook { background: #1877F2; color: #FFF; }
+    .modal-backdrop { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0, 0, 0, 0.65); align-items: center; justify-content: center; padding: 16px; }
+    .modal-backdrop.open { display: flex; }
+    .modal-card { width: 100%; max-width: 390px; background: var(--card); border-radius: 24px; padding: 20px; }
+    .acc-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 16px; border: 2px solid var(--border); margin-bottom: 10px; cursor: pointer; }
+    .acc-avatar { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; border: 2px solid var(--pink); }
+    .profile-header { display: flex; align-items: center; gap: 12px; }
+    .profile-pic-lg { width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--pink); object-fit: cover; }
+    .badge-verified { padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 800; background: #E8F5E9; color: #2E7D32; }
+    .badge-unverified { padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 800; background: #FFEBEE; color: #C62828; }
+    .balance-banner { margin-top: 14px; padding: 14px; border-radius: 16px; background: linear-gradient(135deg, var(--pink), var(--blue)); color: #FFF; display: flex; justify-content: space-between; align-items: center; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .menu-tile { background: var(--bg); border-radius: 16px; padding: 14px 8px; text-align: center; cursor: pointer; border: 1.5px solid var(--border); }
+    .menu-tile .icon { font-size: 24px; margin-bottom: 4px; }
+    .menu-tile .label { font-size: 11px; font-weight: 800; }
+    .stat-box { background: var(--bg); border-radius: 14px; padding: 10px; text-align: center; }
+    .stat-num { font-size: 18px; font-weight: 900; color: var(--pink); }
+    .stat-lbl { font-size: 10px; font-weight: 700; color: var(--subtext); }
+    .progress-wrap { width: 100%; height: 12px; background: var(--bg); border-radius: 10px; overflow: hidden; margin: 8px 0; }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--pink), var(--gold), var(--blue)); transition: width 0.25s ease; }
+    .cat-pills { display: flex; gap: 8px; margin-bottom: 12px; }
+    .cat-pill { flex: 1; padding: 8px 12px; border-radius: 14px; font-size: 12px; font-weight: 800; background: var(--card); color: var(--text); border: 1.5px solid var(--border); cursor: pointer; text-align: center; }
+    .cat-pill.active { background: linear-gradient(135deg, var(--pink), var(--blue)); color: #FFF; border-color: transparent; }
+    .task-card { background: var(--card); border-radius: 18px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 10px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+    .cat-tag { padding: 2px 8px; border-radius: 8px; font-size: 10px; font-weight: 800; background: rgba(33, 150, 243, 0.14); color: var(--blue); }
+    .cat-tag.yt { background: rgba(255, 0, 0, 0.14); color: #D32F2F; }
+    #in-app-viewer { display: none; position: fixed; inset: 0; z-index: 500; background: var(--card); flex-direction: column; }
+    #in-app-viewer.open { display: flex; }
+    .viewer-header { padding: 10px 14px; background: linear-gradient(135deg, var(--pink), var(--blue)); color: #FFF; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .live-verify-strip { background: #1B5E20; color: #E8F5E9; padding: 6px 14px; font-size: 11px; font-weight: 800; display: flex; justify-content: space-between; align-items: center; }
+    .live-verify-strip.paused { background: #B71C1C; color: #FFEBEE; }
+    .viewer-iframe-wrap { flex: 1; background: #000; }
+    .viewer-iframe-wrap iframe { width: 100%; height: 100%; border: none; background: #FFF; }
+    .viewer-footer { padding: 12px 14px; background: var(--card); border-top: 2px solid var(--border); text-align: center; }
+    .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 460px; background: var(--card); display: flex; justify-content: space-around; padding: 8px 4px 10px; box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12); border-top: 2px solid var(--border); z-index: 40; }
+    .nav-btn { background: none; border: none; color: var(--subtext); display: flex; flex-direction: column; align-items: center; font-size: 10px; font-weight: 800; cursor: pointer; padding: 4px 8px; border-radius: 12px; }
+    .nav-btn .nav-icon { font-size: 20px; margin-bottom: 2px; }
+    .nav-btn.active { color: var(--pink); background: rgba(255, 77, 141, 0.12); }
+    .list-row { padding: 10px; border-radius: 14px; background: var(--bg); margin-bottom: 8px; font-size: 12px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .status-pill { padding: 3px 8px; border-radius: 8px; font-size: 10px; font-weight: 800; background: #E8F5E9; color: #2E7D32; }
+  </style>
+</head>
+<body>
+
+  <!-- 0.5 SEC FAST SPLASH SCREEN -->
+  <div id="splash-screen" onclick="hideSplash()">
+    <div id="splash-logo-mount" class="bounce-anim"></div>
+    <div style="margin-top:8px;">
+      <div class="logo-line-1">FRIENDSHIP</div>
+      <div class="logo-line-2">ADS EARNINGS</div>
+      <div class="logo-tagline">Visit &bull; Earn &bull; Withdraw</div>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <!-- TOP BAR -->
+    <header class="top-bar">
+      <div class="brand-left" onclick="goPage('home')">
+        <div id="topbar-logo-mount"></div>
+        <div>
+          <span class="brand-name-top">Friendship Ads Earnings</span>
+          <span class="brand-name-sub">1 Coin = 0.01 PKR &bull; 60s Visit</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:5px;">
+        <button class="pill-btn" id="pwa-install-btn" onclick="installPWAApp()">📲 Install</button>
+        <button class="pill-btn" id="lang-btn" onclick="toggleLang()">اردو</button>
+        <button class="pill-btn" id="theme-btn" onclick="toggleTheme()">🌙</button>
+      </div>
+    </header>
+
+    <!-- LOGIN PAGE -->
+    <section id="page-login" class="page active">
+      <div class="card" style="text-align:center; padding:24px 18px;">
+        <div id="login-logo-mount" class="bounce-anim" style="display:inline-block;"></div>
+        <div style="margin-top:8px;">
+          <div class="logo-line-1">FRIENDSHIP</div>
+          <div class="logo-line-2">ADS EARNINGS</div>
+          <div class="logo-tagline">Visit &bull; Earn &bull; Withdraw</div>
+        </div>
+        <p style="font-size:12px; color:var(--subtext); margin:14px 0 18px; font-weight:600;" data-i18n="loginSub">
+          Sign in instantly with Google or Facebook to visit Websites &amp; YouTube videos (100 Coins / Visit)!
+        </p>
+        <button class="social-btn btn-google" onclick="openAccountModal('Google')">
+          <span style="font-size:20px; font-weight:900; color:#EA4335;">G</span>
+          <span data-i18n="contGoogle">Continue With Google</span>
+        </button>
+        <button class="social-btn btn-facebook" onclick="openAccountModal('Facebook')">
+          <span style="font-size:20px; font-weight:900;">f</span>
+          <span data-i18n="contFb">Continue With Facebook</span>
+        </button>
+        <p style="font-size:11px; color:var(--subtext); margin:12px 0;">By Continuing You Agree to Terms + Privacy</p>
+        <div class="grid-3">
+          <button class="btn-3d btn-dark btn-sm" style="width:100%;" onclick="goPage('terms')">Terms</button>
+          <button class="btn-3d btn-dark btn-sm" style="width:100%;" onclick="goPage('privacy')">Privacy</button>
+          <button class="btn-3d btn-dark btn-sm" style="width:100%;" onclick="goPage('faq')">FAQ</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOME PAGE -->
+    <section id="page-home" class="page">
+      <div class="card">
+        <div class="profile-header">
+          <img id="home-pic" class="profile-pic-lg" src="" alt="Profile" />
+          <div style="flex:1; min-width:0;">
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+              <strong id="home-name" style="font-size:16px;">User</strong>
+              <span id="home-ver-badge" class="badge-unverified">Unverified</span>
+            </div>
+            <div id="home-email" style="font-size:11px; color:var(--subtext);">user@gmail.com</div>
+            <div style="font-size:11px; font-weight:700; color:var(--blue);">Logged in with: <span id="home-provider">Google</span></div>
+          </div>
+        </div>
+
+        <div class="balance-banner">
+          <div>
+            <div style="font-size:11px; opacity:0.9;">Coins Balance</div>
+            <div style="font-size:24px; font-weight:900;"><span id="home-coins">0</span> 🪙</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:11px; opacity:0.9;">PKR (1 Coin = 0.01 PKR)</div>
+            <div style="font-size:22px; font-weight:900;">Rs. <span id="home-rs">0.00</span></div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:12px;">
+          <button class="btn-3d btn-pink btn-sm" style="width:100%;" onclick="goPage('wallet')">💸 Withdraw</button>
+          <button class="btn-3d btn-gold btn-sm" style="width:100%;" onclick="goPage('buy')">🪙 Buy Coins</button>
+          <button class="btn-3d btn-blue btn-sm" style="width:100%;" onclick="switchAccount()">🔄 Switch Account</button>
+          <button class="btn-3d btn-dark btn-sm" style="width:100%;" onclick="logoutUser()">🚪 Logout</button>
+        </div>
+      </div>
+
+      <!-- Website & YouTube Quick Buttons -->
+      <div class="card" style="padding:14px;">
+        <div style="font-weight:800; font-size:14px; margin-bottom:8px;">🌐 Website &amp; ▶️ YouTube (100 Coins / 60s Visit)</div>
+        <div class="grid-2">
+          <button class="btn-3d btn-blue btn-sm" style="width:100%;" onclick="openCategoryDirect('Website')">🌐 Visit Websites</button>
+          <button class="btn-3d btn-yt btn-sm" style="width:100%;" onclick="openCategoryDirect('YouTube')">▶️ Watch YouTube</button>
+          <button class="btn-3d btn-pink btn-sm" style="width:100%;" onclick="openPromoteDirect('Website')">📣 Promote Website</button>
+          <button class="btn-3d btn-gold btn-sm" style="width:100%;" onclick="openPromoteDirect('YouTube')">🎬 Promote YouTube</button>
+        </div>
+      </div>
+
+      <!-- Daily Bonus -->
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:800; font-size:14px;">🎁 Daily Bonus (+20 Coins Daily)</div>
+            <div style="font-size:11px; color:var(--subtext);">7 Days = +100 Bonus (Streak: <span id="streak-days">0</span>/7)</div>
+          </div>
+          <button class="btn-3d btn-gold btn-sm" onclick="claimDailyBonus()">Claim</button>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:10px; padding-top:8px; border-top:1px dashed var(--border); font-size:11px; font-weight:700;">
+          <span>🟢 Online: <strong style="color:#2E7D32;">1250 Online Now</strong></span>
+          <span>Rate: 100 Coins = Rs. 1.00</span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="card" style="padding:12px;">
+        <div class="grid-3">
+          <div class="stat-box"><div class="stat-num" id="stat-today">0</div><div class="stat-lbl">Today Visits</div></div>
+          <div class="stat-box"><div class="stat-num" id="stat-total">0</div><div class="stat-lbl">Total Visits</div></div>
+          <div class="stat-box"><div class="stat-num" id="stat-refs">0</div><div class="stat-lbl">Referrals</div></div>
+        </div>
+      </div>
+
+      <!-- Menu Grid -->
+      <div class="card">
+        <div class="grid-3">
+          <div class="menu-tile" onclick="goPage('visit')"><div class="icon">🚀</div><div class="label">Visit &amp; Earn</div></div>
+          <div class="menu-tile" onclick="goPage('promote')"><div class="icon">📣</div><div class="label">Promote</div></div>
+          <div class="menu-tile" onclick="goPage('refer')"><div class="icon">🤝</div><div class="label">Referral</div></div>
+          <div class="menu-tile" onclick="goPage('leaderboard')"><div class="icon">👑</div><div class="label">Leaderboard</div></div>
+          <div class="menu-tile" onclick="goPage('wallet')"><div class="icon">👛</div><div class="label">Wallet</div></div>
+          <div class="menu-tile" onclick="goPage('verify')"><div class="icon">✅</div><div class="label">Verify</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERIFICATION PAGE -->
+    <section id="page-verify" class="page">
+      <div class="card">
+        <h3 style="font-size:17px; font-weight:900; margin-bottom:6px;">🛡️ Account Verification</h3>
+        <div style="background:#E8F5E9; color:#2E7D32; padding:10px; border-radius:12px; font-size:12px; font-weight:700; margin-bottom:14px;">
+          ✅ Email Already Verified via <span id="ver-provider-name">Google</span> — No OTP Needed!
+        </div>
+        <div style="text-align:center; margin-bottom:14px;">
+          <img id="ver-pic" class="profile-pic-lg" style="width:80px; height:80px;" src="" alt="Profile" />
+          <div style="margin-top:8px;">
+            <label class="btn-3d btn-blue btn-sm" style="cursor:pointer;">
+              📷 Upload New Pic
+              <input type="file" accept="image/*" style="display:none;" onchange="handlePicUpload(event)" />
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Security Captcha: 3 + 4 = ?</label>
+          <input type="number" id="ver-captcha" class="input-box" placeholder="Enter Answer = 7" />
+        </div>
+        <label style="display:flex; align-items:center; gap:10px; font-size:13px; font-weight:700; margin:12px 0;">
+          <input type="checkbox" id="ver-robot" style="width:18px; height:18px;" /> I'm not a robot
+        </label>
+        <div id="ver-sys-box" style="display:none; margin:12px 0;">
+          <div style="font-size:12px; font-weight:700;" id="ver-sys-text">System Auto Check: 0%</div>
+          <div class="progress-wrap"><div class="progress-fill" id="ver-progress"></div></div>
+        </div>
+        <button class="btn-3d" onclick="runVerification()">✅ Verify My Account Now</button>
+      </div>
+    </section>
+
+    <!-- VISIT & EARN PAGE -->
+    <section id="page-visit" class="page">
+      <div class="card">
+        <h3 style="f
